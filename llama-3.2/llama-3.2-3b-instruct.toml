@@ -28,11 +28,11 @@ vocabulary_file = "llama-3.2.vocab"
 split_regex = "(?i:'s|'t|'re|'ve|'m|'ll|'d)|[^\\r\\n\\p{L}\\p{N}]?\\p{L}+|\\p{N}{1,3}| ?[^\\s\\p{L}\\p{N}]+[\\r\\n]*|\\s*[\\r\\n]+|\\s+(?!\\S)|\\s+"
 
 [tokenizer.special_tokens]
-"128000" = "<|begin_of_text|>"
-"128001" = "<|end_of_text|>"
-"128006" = "<|start_header_id|>"
-"128007" = "<|end_header_id|>"
-"128009" = "<|eot_id|>"
+"<|begin_of_text|>" = 128000
+"<|end_of_text|>" = 128001
+"<|start_header_id|>" = 128006
+"<|end_header_id|>" = 128007
+"<|eot_id|>" = 128009
 
 # Prompt template configuration
 [template]
