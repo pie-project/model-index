@@ -1,23 +1,11 @@
 [[traits]]
-name = "scheduled"
-description = "Manages scheduling and resources, allowing for the creation, prioritization, and synchronization of execution streams."
-since = "0.1.0"
-supertraits = []
-
-[[traits]]
-name = "info"
-description = "Exposes metadata of supported models, such as querying for the maximum context length."
-since = "0.1.0"
-supertraits = []
-
-[[traits]]
 name = "allocate"
 description = "Manages memory allocation for key-value (KV) cache pages and embeddings, including copying, exporting, and importing."
 since = "0.1.0"
-supertraits = ["scheduled", "info"]
+supertraits = []
 
 [[traits]]
-name = "fill"
+name = "forward"
 description = "Transforms input embeddings into the key-value (KV) cache for attention mechanisms and allows for token-level masking."
 since = "0.1.0"
 supertraits = ["allocate"]
