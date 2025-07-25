@@ -1,24 +1,25 @@
 # Model metadata
-name = "llama-3.2-3b-instruct"
-description = "Meta Llama 3.2 3B Instruct Model"
+name = "llama-3.1-8b-instruct"
+description = "Meta Llama 3.1 8B Instruct Model"
 version = "1.0"
 license = "Llama"
 traits = ["input_text", "output_text", "tokenize"]
-parameters = ["llama-3.2-3b-instruct.zt"] 
+parameters = ["llama-3.1-8b-instruct.zt"] 
+
 
 # Model architecture details
 [architecture]
 type = "l4ma"
-num_layers = 28
-num_query_heads = 24
+num_layers = 32
+num_query_heads = 32
 num_key_value_heads = 8
 head_size = 128
-hidden_size = 3072
-intermediate_size = 8192
+hidden_size = 4096
+intermediate_size = 14336
 vocab_size = 128256
 
 [architecture.rope]
-factor = 32.0
+factor = 8.0
 high_frequency_factor = 4.0
 low_frequency_factor = 1.0
 theta = 500000.0
@@ -26,7 +27,7 @@ theta = 500000.0
 # Tokenizer configuration
 [tokenizer]
 type = "bpe"
-vocabulary_file = "llama-3.2.vocab"
+vocabulary_file = "llama-3.1.vocab"
 split_regex = "(?i:'s|'t|'re|'ve|'m|'ll|'d)|[^\\r\\n\\p{L}\\p{N}]?\\p{L}+|\\p{N}{1,3}| ?[^\\s\\p{L}\\p{N}]+[\\r\\n]*|\\s*[\\r\\n]+|\\s+(?!\\S)|\\s+"
 
 [tokenizer.special_tokens]
@@ -89,5 +90,5 @@ Respond in the format {"name": function name, "parameters": dictionary of argume
 """
 
 [source]
-"llama-3.2-3b-instruct.zt" = "https://huggingface.co/pie-project/llama-3.2-3b-instruct/resolve/main/llama-3.2-3b-instruct.zt"
-"llama-3.2.vocab" = "https://huggingface.co/pie-project/llama-3.2-3b-instruct/resolve/main/llama-3.2.vocab"
+"llama-3.1-8b-instruct.zt" = "https://huggingface.co/pie-project/llama-3.1-8b-instruct/resolve/main/llama-3.1-8b-instruct.zt"
+"llama-3.1.vocab" = "https://huggingface.co/pie-project/llama-3.2-3b-instruct/resolve/main/llama-3.2.vocab"

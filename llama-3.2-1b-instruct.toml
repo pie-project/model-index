@@ -2,6 +2,8 @@
 name = "llama-3.2-1b-instruct"
 description = "Meta Llama 3.2 1B Instruct Model"
 version = "1.0"
+license = "Llama"
+traits = ["input_text", "output_text", "tokenize"]
 parameters = ["llama-3.2-1b-instruct.zt"] 
 
 # Model architecture details

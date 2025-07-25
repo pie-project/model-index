@@ -1,0 +1,47 @@
+[[traits]]
+name = "scheduled"
+description = "Manages scheduling and resources, allowing for the creation, prioritization, and synchronization of execution streams."
+since = "0.1.0"
+supertraits = []
+
+[[traits]]
+name = "info"
+description = "Exposes metadata of supported models, such as querying for the maximum context length."
+since = "0.1.0"
+supertraits = []
+
+[[traits]]
+name = "allocate"
+description = "Manages memory allocation for key-value (KV) cache pages and embeddings, including copying, exporting, and importing."
+since = "0.1.0"
+supertraits = ["scheduled", "info"]
+
+[[traits]]
+name = "fill"
+description = "Transforms input embeddings into the key-value (KV) cache for attention mechanisms and allows for token-level masking."
+since = "0.1.0"
+supertraits = ["allocate"]
+
+[[traits]]
+name = "input_text"
+description = "Provides functionality for handling and embedding text-based inputs as part of the construct stage."
+since = "0.1.0"
+supertraits = ["allocate", "fill"]
+
+[[traits]]
+name = "input_image"
+description = "Provides functionality for handling and embedding image-based inputs as part of the construct stage."
+since = "0.1.0"
+supertraits = ["allocate", "fill"]
+
+[[traits]]
+name = "tokenize"
+description = "Handles the conversion between text and token IDs and provides access to the model's vocabulary."
+since = "0.1.0"
+supertraits = ["input_text"]
+
+[[traits]]
+name = "output_text"
+description = "Manages the generation of text output by producing the distribution for the next token as part of the extract stage."
+since = "0.1.0"
+supertraits = ["allocate"]
