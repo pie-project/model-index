@@ -28,6 +28,7 @@ theta = 500000.0
 type = "bpe"
 vocabulary_file = "llama-3.2.vocab"
 split_regex = "(?i:'s|'t|'re|'ve|'m|'ll|'d)|[^\\r\\n\\p{L}\\p{N}]?\\p{L}+|\\p{N}{1,3}| ?[^\\s\\p{L}\\p{N}]+[\\r\\n]*|\\s*[\\r\\n]+|\\s+(?!\\S)|\\s+"
+escape_non_printable = false
 
 [tokenizer.special_tokens]
 "<|begin_of_text|>" = 128000
