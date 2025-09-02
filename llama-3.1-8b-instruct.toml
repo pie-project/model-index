@@ -17,6 +17,8 @@ head_size = 128
 hidden_size = 4096
 intermediate_size = 14336
 vocab_size = 128256
+use_qkv_bias = false
+rms_norm_eps = 1e-5
 
 [architecture.rope]
 factor = 8.0

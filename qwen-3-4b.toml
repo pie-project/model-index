@@ -14,6 +14,8 @@ head_size = 128
 hidden_size = 2560
 intermediate_size = 9728
 vocab_size = 151936
+use_qkv_bias = false
+rms_norm_eps = 1e-5
 
 [architecture.rope]
 theta = 1000000.0
