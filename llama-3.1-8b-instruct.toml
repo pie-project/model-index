@@ -42,54 +42,34 @@ escape_non_printable = false
 
 # Prompt template configuration
 [template]
-type = "tera"
+type = "minijinja"
 content = """
-<|start_header_id|>system<|end_header_id|>
-
-Cutting Knowledge Date: December 2023
-
-{% if system %}{{ system }}
-{% endif %}
-{% if tools %}When you receive a tool call response, use the output to format an answer to the orginal user question.
-
-You are a helpful assistant with tool calling capabilities.
-{% endif %}<|eot_id|>
-{% for message in messages %}
-{% set last = loop.last %}
-{% if message.role == "user" %}<|start_header_id|>user<|end_header_id|>
-{% if tools and last %}
-
-Given the following functions, please respond with a JSON for a function call with its proper arguments that best answers the given prompt.
-
-Respond in the format {"name": function name, "parameters": dictionary of argument name and its value}. Do not use variables.
-
-{% for tool in tools %}
-{{ tool }}
-{% endfor %}
-{{ message.content }}<|eot_id|>
-{% else %}
-
-{{ message.content }}<|eot_id|>
-{% endif %}{% if last %}<|start_header_id|>assistant<|end_header_id|>
-
-{% endif %}
-{% elif message.role == "assistant" %}<|start_header_id|>assistant<|end_header_id|>
-{% if message.tool_calls %}
-{% for tool_call in message.tool_calls %}
-{"name": "{{ tool_call.function.name }}", "parameters": {{ tool_call.function.arguments }}}{% endfor %}
-{% else %}
-
-{{ message.content }}
-{% endif %}{% if not last %}<|eot_id|>
-{% endif %}
-{% elif message.role == "tool" %}<|start_header_id|>ipython<|end_header_id|>
-
-{{ message.content }}<|eot_id|>
-{% if last %}<|start_header_id|>assistant<|end_header_id|>
-
-{% endif %}
-{% endif %}
-{% endfor %}
+<|start_header_id|>system<|end_header_id|>{{ "\n" }}
+{%- for m in messages if m.role == "system" %}
+{{ m.content }}
+{%- endfor %}<|eot_id|>
+{%- for m in messages if m.role != "system" %}
+{%- set hdr = (
+    "user" if m.role=="user" else
+    "assistant" if m.role=="assistant" else
+    "ipython" if m.role=="tool" else "user"
+) -%}
+<|start_header_id|>{{ hdr }}<|end_header_id|>{{ "\n" }}
+{%- if m.role == "assistant" and m.reasoning_content %}<think>
+{{ m.reasoning_content | trim }}
+</think>
+{%- endif -%}
+{%- if m.role == "assistant" and m.tool_calls %}
+{%- for tc in m.tool_calls %}
+{"name":"{{ tc.name }}","parameters": {{ tc.arguments | tojson }}}
+{%- endfor %}
+{%- else %}
+{{ m.content }}
+{%- endif %}
+<|eot_id|>
+{%- endfor %}
+{%- if add_generation_prompt and (messages | length == 0 or (messages | last).role != "assistant") %}<|start_header_id|>assistant<|end_header_id|>
+{%- endif %}
 """
 
 [source]
