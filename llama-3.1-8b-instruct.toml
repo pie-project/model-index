@@ -44,12 +44,9 @@ escape_non_printable = false
 [template]
 type = "minijinja"
 content = """
-<|start_header_id|>system<|end_header_id|>{{ "\n" }}
-{%- for m in messages if m.role == "system" %}
-{{ m.content }}
-{%- endfor %}<|eot_id|>
-{%- for m in messages if m.role != "system" %}
+{%- for m in messages %}
 {%- set hdr = (
+    "system" if m.role=="system" else
     "user" if m.role=="user" else
     "assistant" if m.role=="assistant" else
     "ipython" if m.role=="tool" else "user"
