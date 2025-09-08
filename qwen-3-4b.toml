@@ -96,6 +96,7 @@ content = """
 <|im_start|>assistant
 {%- endif %}
 """
+stop_tokens = ["<|im_end|>", "<|im_start|>", "<|endoftext|>"]
 
 [source]
 "qwen-3-4b.zt" = "https://huggingface.co/pie-project/qwen-3-4b/resolve/main/qwen-3-4b.zt"

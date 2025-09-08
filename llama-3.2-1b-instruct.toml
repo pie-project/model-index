@@ -70,6 +70,7 @@ content = """
 {%- if add_generation_prompt and (messages | length == 0 or (messages | last).role != "assistant") %}<|start_header_id|>assistant<|end_header_id|>
 {%- endif %}
 """
+stop_tokens = ["<|eot_id|>", "<|end_of_text|>"]
 
 [source]
 "llama-3.2-1b-instruct.zt" = "https://huggingface.co/pie-project/llama-3.2-1b-instruct/resolve/main/llama-3.2-1b-instruct.zt"
