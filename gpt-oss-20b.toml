@@ -65,40 +65,78 @@ escape_non_printable = true
 [template]
 type = "ninja"
 content = """
-{# ----- Minimal MiniJinja chat template (no tools, no helpers) ----- #}
-
-{# System header (optional model_identity/current_date) #}
-<|start|>system<|message|>
-{% if model_identity is defined and model_identity %}
-{{ model_identity }}
-{% else %}
-You are ChatGPT, a large language model.
-{% endif %}
-{% if current_date is defined and current_date %}
-Current date: {{ current_date }}
-{% endif %}
-<|end|>
-
-{# Developer message (optional) #}
-{% if developer_instructions is defined and developer_instructions %}
-<|start|>developer<|message|>{{ developer_instructions }}<|end|>
-{% endif %}
-
-{# Conversation turns #}
-{% for m in messages %}
-  {% if m.role == "user" and m.content is defined %}
-<|start|>user<|message|>{{ m.content }}<|end|>
-  {% elif m.role == "assistant" and m.content is defined %}
-<|start|>assistant<|channel|>final<|message|>{{ m.content }}<|end|>
-  {% elif m.role == "system" and m.content is defined %}
-<|start|>system<|message|>{{ m.content }}<|end|>
-  {% endif %}
-{% endfor %}
-
-{# Generation prompt for next turn #}
-{% if add_generation_prompt %}
+{#- Simplified Template that Removed Tool Calls to Work With MiniJinja #}
+{#- Main Template Logic ================================================= #}
+{#- Set defaults #}
+{#- Render system message #}
+{{- "<|start|>system<|message|>" }}
+{%- if model_identity is not defined %}
+    {%- set model_identity = "You are ChatGPT, a large language model trained by OpenAI." %}
+{%- endif %}
+{{- model_identity + "\n" }}
+{{- "Knowledge cutoff: 2024-06\n" }}
+{{- "Current date: %2025-09-24\n\n" }}
+{%- if reasoning_effort is not defined %}
+    {%- set reasoning_effort = "medium" %}
+{%- endif %}
+{{- "Reasoning: " + reasoning_effort + "\n\n" }}
+{{- "# Valid channels: analysis, commentary, final. Channel must be included for every message." }}
+{{- "<|end|>" }}
+{#- Extract developer message #}
+{%- if messages[0].role == "developer" or messages[0].role == "system" %}
+    {%- set developer_message = messages[0].content %}
+    {%- set loop_messages = messages[1:] %}
+{%- else %}
+    {%- set developer_message = "" %}
+    {%- set loop_messages = messages %}
+{%- endif %}
+{#- Render developer message #}
+{%- if developer_message %}
+    {{- "<|start|>developer<|message|>" }}
+    {%- if developer_message %}
+        {{- "# Instructions\n\n" }}
+        {{- developer_message }}
+        {{- "\n\n" }}
+    {%- endif %}
+    {{- "<|end|>" }}
+{%- endif %}
+{#- Render messages #}
+{%- for message in loop_messages -%}
+    {#- At this point only assistant/user messages should remain #}
+    {%- if message.role == 'assistant' -%}
+        {#- Checks to ensure the messages are being passed in the format we expect #}
+        {%- if "content" in message %}
+            {%- if "<|channel|>analysis<|message|>" in message.content or "<|channel|>final<|message|>" in message.content %}
+                {{- raise("You have passed a message containing <|channel|> tags in the content field. Instead of doing this, you should pass analysis messages (the string between '<|message|>' and '<|end|>') in the 'thinking' field, and final messages (the string between '<|message|>' and '<|end|>') in the 'content' field.") }}
+            {%- endif %}
+        {%- endif %}
+        {%- if "thinking" in message %}
+            {%- if "<|channel|>analysis<|message|>" in message.thinking or "<|channel|>final<|message|>" in message.thinking %}
+                {{- raise("You have passed a message containing <|channel|> tags in the thinking field. Instead of doing this, you should pass analysis messages (the string between '<|message|>' and '<|end|>') in the 'thinking' field, and final messages (the string between '<|message|>' and '<|end|>') in the 'content' field.") }}
+            {%- endif %}
+        {%- endif %}
+        {%- if loop.last and not add_generation_prompt %}
+            {#- Only render the CoT if the final turn is an assistant turn and add_generation_prompt is false #}
+            {#- This is a situation that should only occur in training, never in inference. #}
+            {%- if "thinking" in message %}
+                {{- "<|start|>assistant<|channel|>analysis<|message|>" + message.thinking + "<|end|>" }}
+            {%- endif %}
+            {#- <|return|> indicates the end of generation, but <|end|> does not #}
+            {#- <|return|> should never be an input to the model, but we include it as the final token #}
+            {#- when training, so the model learns to emit it. #}
+            {{- "<|start|>assistant<|channel|>final<|message|>" + message.content + "<|return|>" }}
+        {%- else %}
+            {#- CoT is dropped during all previous turns, so we never render it for inference #}
+            {{- "<|start|>assistant<|channel|>final<|message|>" + message.content + "<|end|>" }}
+        {%- endif %}
+    {%- elif message.role == 'user' -%}
+        {{- "<|start|>user<|message|>" + message.content + "<|end|>" }}
+    {%- endif -%}
+{%- endfor -%}
+{#- Generation prompt #}
+{%- if add_generation_prompt -%}
 <|start|>assistant
-{% endif %}
+{%- endif -%}
 """
 stop_tokens = ["<|endoftext|>", "<|return|>", "<|call|>"]
 
