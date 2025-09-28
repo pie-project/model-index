@@ -24,7 +24,7 @@ theta = 1000000.0
 [tokenizer]
 type = "bpe"
 vocabulary_file = "deepseek-r1-distill-qwen-2-14b.vocab"
-split_regex = "(?i:'s|'t|'re|'ve|'m|'ll|'d)|[^\r\n\p{L}\p{N}]?\p{L}+|\p{N}| ?[^\s\p{L}\p{N}]+[\r\n]*|\s*[\r\n]+|\s+(?!\S)|\s+"
+split_regex = "(?i:'s|'t|'re|'ve|'m|'ll|'d)|[^\\r\\n\\p{L}\\p{N}]?\\p{L}+|\\p{N}| ?[^\\s\\p{L}\\p{N}]+[\\r\\n]*|\\s*[\\r\\n]+|\\s+(?!\\S)|\\s+"
 escape_non_printable = true
 
 [tokenizer.special_tokens]
