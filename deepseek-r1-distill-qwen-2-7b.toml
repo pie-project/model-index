@@ -1,24 +1,24 @@
 # Model metadata
-name = "deepseek-r1-distill-qwen-2-14b"
-description = "DeepSeek-R1 Distilled Qwen 2 14B Model"
+name = "deepseek-r1-distill-qwen-2-7b"
+description = "DeepSeek-R1 Distilled Qwen 2 7B Model"
 version = "1.0"
-parameters = ["deepseek-r1-distill-qwen-2-14b.zt"]
+parameters = ["deepseek-r1-distill-qwen-2-7b.zt"]
 
 # Model architecture details
 [architecture]
 type = "qwen2"
-num_layers = 48
-num_query_heads = 40
-num_key_value_heads = 8
+num_layers = 28
+num_query_heads = 28
+num_key_value_heads = 4
 head_size = 128
-hidden_size = 5120
-intermediate_size = 13824
+hidden_size = 3584
+intermediate_size = 18944
 vocab_size = 152064
 use_qkv_bias = true
 rms_norm_eps = 1e-5
 
 [architecture.rope]
-theta = 1000000.0
+theta = 10000.0
 
 # Tokenizer configuration
 [tokenizer]
@@ -39,5 +39,5 @@ stop_tokens = ["<｜end▁of▁sentence｜>"]
 
 
 [source]
-"deepseek-r1-distill-qwen-2-14b.zt" = "https://huggingface.co/pie-project/deepseek-r1-distill-qwen-2-14b/resolve/main/deepseek-r1-distill-qwen-2-14b.zt"
-"deepseek-r1-distill-qwen-2.vocab" = "https://huggingface.co/pie-project/deepseek-r1-distill-qwen-2-14b/resolve/main/deepseek-r1-distill-qwen-2.vocab"
+"deepseek-r1-distill-qwen-2-7b.zt" = "https://huggingface.co/pie-project/deepseek-r1-distill-qwen-2-7b/resolve/main/deepseek-r1-distill-qwen-2-7b.zt"
+"deepseek-r1-distill-qwen-2.vocab" = "https://huggingface.co/pie-project/deepseek-r1-distill-qwen-2-7b/resolve/main/deepseek-r1-distill-qwen-2.vocab"
