@@ -1,0 +1,24 @@
+{
+  "deepseek-r1-distill-qwen-2-7b": ["cuda"],
+  "deepseek-r1-distill-qwen-2-14b": ["cuda"],
+  "deepseek-r1-distill-qwen-2-32b": ["cuda"],
+
+  "llama-3.1-8b-instruct": ["cuda", "metal", "desktop-macos"],
+  "llama-3.2-1b-instruct": ["cuda", "metal", "desktop-macos"],
+  "llama-3.2-3b-instruct": ["cuda", "metal", "desktop-macos"],
+
+  "qwen-2.5-0.5b-instruct": ["cuda"],
+  "qwen-2.5-1.5b-instruct": ["cuda"],
+  "qwen-2.5-3b-instruct": ["cuda"],
+  "qwen-2.5-7b-instruct": ["cuda"],
+  "qwen-2.5-14b-instruct": ["cuda"],
+  "qwen-2.5-32b-instruct": ["cuda"],
+
+  "qwen-3-0.6b": ["cuda", "metal", "desktop-macos"],
+  "qwen-3-1.7b": ["cuda", "metal", "desktop-macos"],
+  "qwen-3-4b": ["cuda", "metal", "desktop-macos"],
+  "qwen-3-8b": ["cuda", "metal", "desktop-macos"],
+  "qwen-3-vl-2b-instruct": [],
+
+  "gpt-oss-20b": ["cuda"]
+}
