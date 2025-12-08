@@ -28,8 +28,28 @@ split_regex = "(?i:'s|'t|'re|'ve|'m|'ll|'d)|[^\\r\\n\\p{L}\\p{N}]?\\p{L}+|\\p{N}
 escape_non_printable = true
 
 [tokenizer.special_tokens]
-"<｜begin▁of▁sentence｜>" = 151646
 "<｜end▁of▁sentence｜>" = 151643
+"<｜User｜>" = 151644
+"<｜Assistant｜>" = 151645
+"<｜begin▁of▁sentence｜>" = 151646
+"<|EOT|>" = 151647
+"<think>" = 151648
+"</think>" = 151649
+"<|quad_start|>" = 151650
+"<|quad_end|>" = 151651
+"<|vision_start|>" = 151652
+"<|vision_end|>" = 151653
+"<|vision_pad|>" = 151654
+"<|image_pad|>" = 151655
+"<|video_pad|>" = 151656
+"<tool_call>" = 151657
+"</tool_call>" = 151658
+"<|fim_prefix|>" = 151659
+"<|fim_middle|>" = 151660
+"<|fim_suffix|>" = 151661
+"<|fim_pad|>" = 151662
+"<|repo_name|>" = 151663
+"<|file_sep|>" = 151664
 
 # Prompt template configuration for reasoning model
 [template]
@@ -99,7 +119,7 @@ content = """{%- if not add_generation_prompt is defined -%}
 	{{- "<｜Assistant｜><think>\n" -}}
 {%- endif -%}
 """
-stop_tokens = ["<｜end▁of▁sentence｜>"]
+stop_tokens = ["<｜end▁of▁sentence｜>", "<|EOT|>"]
 
 
 [source]
