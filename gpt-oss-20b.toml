@@ -19,6 +19,8 @@ rms_norm_eps = 1e-5
 initial_context_length = 4096
 max_position_embeddings = 131072
 sliding_window = 128
+swiglu_alpha = 1.702
+swiglu_beta = 1.0
 swiglu_limit = 7.0
 
 [architecture.moe]
