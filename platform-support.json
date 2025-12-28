@@ -20,5 +20,6 @@
   "qwen-3-8b": ["cuda", "metal", "desktop-macos"],
   "qwen-3-vl-2b-instruct": [],
 
-  "gpt-oss-20b": ["cuda"]
+  "gpt-oss-20b": ["cuda"],
+  "gpt-oss-120b": ["cuda"]
 }
